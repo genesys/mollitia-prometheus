@@ -1,34 +1,35 @@
 import * as Mollitia from 'mollitia';
+import { PrometheusLabels, PrometheusMetric } from './metrics';
 import { PrometheusCounter } from './metrics/counter';
 
-// TODO
 interface PrometheusCircuitMetrics {
-  total_count: PrometheusCounter;
+  [key: string]: PrometheusMetric;
+  total_executions: PrometheusCounter;
 }
 
 export interface PrometheusCircuitOptions {
   name: string;
+  labels?: PrometheusLabels;
 }
+
 export interface PrometheusCircuitData extends PrometheusCircuitOptions {
   metrics: PrometheusCircuitMetrics;
   scrap (): string;
 }
 
-export const attachMetrics = (module: Mollitia.Circuit): PrometheusCircuitMetrics => {
+export const attachMetrics = (circuit: Mollitia.Circuit, options: Mollitia.CircuitOptions): PrometheusCircuitMetrics => {
   // Total Count
-  const total_count = new PrometheusCounter(
-    'total_count',
-    0,
+  const total_executions = new PrometheusCounter(
+    'total_executions',
     {
-      description: 'Total Count'
+      description: 'Total Executions',
+      labels: options.prometheus.labels
     }
   );
-  module.on('execute', (circuit: Mollitia.Circuit) => {
-    total_count.inc(1, {
-      circuit: circuit.prometheus.name
-    });
+  circuit.on('execute', (circuit: Mollitia.Circuit) => {
+    total_executions.inc(1, circuit.prometheus.name);
   });
   return {
-    total_count
+    total_executions
   };
 }

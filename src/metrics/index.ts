@@ -9,8 +9,10 @@ export interface PrometheusMetrics {
 export interface PrometheusMetric {
   key: string;
   type: PrometheusMetricType;
-  labels: string[];
+  labels: PrometheusLabels;
   scrap (): string;
+  scrapHelp (): string;
+  scrapValues (): string;
 }
 
 export interface PrometheusLabels {

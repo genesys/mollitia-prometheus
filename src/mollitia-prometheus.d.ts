@@ -5,11 +5,11 @@ import { PrometheusTimeoutData } from './module/timeout';
 
 declare module 'mollitia' {
   // Circuit
-  interface Circuit {
-    prometheus: PrometheusCircuitData;
-  }
   interface CircuitOptions {
     prometheus: PrometheusCircuitOptions;
+  }
+  interface Circuit {
+    prometheus: PrometheusCircuitData;
   }
   // Module
   interface Module {
@@ -18,7 +18,7 @@ declare module 'mollitia' {
   interface ModuleOptions {
     prometheus: PrometheusModuleOptions;
   }
-  interface Timeout {
+  class Timeout {
     prometheus: PrometheusTimeoutData;
   }
 }
