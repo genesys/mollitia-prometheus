@@ -1,1 +1,1 @@
-# mollithia-prometheus
+# Prometheus Mollitia Plugin
