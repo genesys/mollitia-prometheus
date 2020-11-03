@@ -2,6 +2,19 @@ import * as Mollitia from 'mollitia';
 import * as PrometheusCircuit from './circuit';
 import * as PrometheusTimeout from './module/timeout';
 
+interface ValueMetrics {
+  [key: string]: {
+    circuits: {
+      [key: string]: number;
+    },
+    modules: {
+      [key: string]: {
+        [key: string]: number;
+      }
+    }
+  }
+}
+
 interface ScrapMetrics {
   [key: string]: {
     help: string;
@@ -9,26 +22,66 @@ interface ScrapMetrics {
   }
 }
 
-export const scrap = (): string => {
-  const metrics: ScrapMetrics = {};
-  for (const circuit of Mollitia.circuits) {
+export const circuits: Mollitia.Circuit[] = [];
+export const modules: Mollitia.Module[] = [];
+
+export const metrics = (): ValueMetrics => {
+  const _metrics: ValueMetrics = {};
+  for (const circuit of circuits) {
+    const circuitName = circuit.prometheus.name;
     for (const metric in circuit.prometheus.metrics) {
-      if (metrics[metric]) {
-        metrics[metric].value += circuit.prometheus.metrics[metric].scrapValues();
+      if (_metrics[metric]) {
+        _metrics[metric].circuits[circuitName] = circuit.prometheus.metrics[metric].values[circuitName];
       } else {
-        metrics[metric] = {
+        _metrics[metric] = {
+          circuits: {
+            [circuitName]: circuit.prometheus.metrics[metric].values[circuitName] || 0
+          },
+          modules: {}
+        };
+      }
+    }
+  }
+  for (const module of modules) {
+    const moduleName = module.prometheus.name;
+    for (const metric in module.prometheus.metrics) {
+      if (Object.keys(module.prometheus.metrics[metric].values).length) {
+        if (_metrics[metric]) {
+          _metrics[metric].modules[moduleName] = module.prometheus.metrics[metric].values;
+        } else {
+          _metrics[metric] = {
+            circuits: {},
+            modules: {
+              [moduleName]: module.prometheus.metrics[metric].values
+            }
+          };
+        }
+      }
+    }
+  }
+  return _metrics;
+};
+
+export const scrap = (): string => {
+  const _metrics: ScrapMetrics = {};
+  for (const circuit of circuits) {
+    for (const metric in circuit.prometheus.metrics) {
+      if (_metrics[metric]) {
+        _metrics[metric].value += circuit.prometheus.metrics[metric].scrapValues();
+      } else {
+        _metrics[metric] = {
           help: circuit.prometheus.metrics[metric].scrapHelp(),
           value: circuit.prometheus.metrics[metric].scrapValues() 
         }
       }
     }
   }
-  for (const module of Mollitia.modules) {
+  for (const module of modules) {
     for (const metric in module.prometheus.metrics) {
-      if (metrics[metric]) {
-        metrics[metric].value += module.prometheus.metrics[metric].scrapValues();
+      if (_metrics[metric]) {
+        _metrics[metric].value += module.prometheus.metrics[metric].scrapValues();
       } else {
-        metrics[metric] = {
+        _metrics[metric] = {
           help: module.prometheus.metrics[metric].scrapHelp(),
           value: module.prometheus.metrics[metric].scrapValues() 
         }
@@ -36,8 +89,8 @@ export const scrap = (): string => {
     }
   }
   let str = '';
-  for (const metric in metrics) {
-    str += `${metrics[metric].help}${metrics[metric].value}`;
+  for (const metric in _metrics) {
+    str += `${_metrics[metric].help}${_metrics[metric].value}`;
   }
   return str;
 };
@@ -57,11 +110,12 @@ export class PrometheusPlugin implements Mollitia.Plugin {
         return scrap;
       }
     };
+    circuits.push(circuit);
   }
   onModuleCreate (module: Mollitia.Module, options: Mollitia.ModuleOptions): void {
     let attachMetrics;
-    switch (module.constructor) {
-      case Mollitia.Timeout: {
+    switch (module.constructor.name) {
+      case Mollitia.Timeout.name: {
         attachMetrics = PrometheusTimeout.attachMetrics;
         break;
       }
@@ -81,5 +135,6 @@ export class PrometheusPlugin implements Mollitia.Plugin {
         return scrap;
       }
     };
+    modules.push(module);
   }
 }

@@ -21,8 +21,8 @@ export class PrometheusCounter implements PrometheusMetric {
   constructor (key: string, options?: PrometheusCounterOptions) {
     this.key = key;
     this.type = PrometheusMetricType.COUNTER;
-    this.values = {};
     this.labels = options?.labels || {};
+    this.values = {};
     if (options?.description) { this.description = options?.description }
   }
   // Public Methods
@@ -31,14 +31,19 @@ export class PrometheusCounter implements PrometheusMetric {
     this.values[circuitName] += value;
   }
   public scrap (): string {
-    let str = this.scrapHelp();
-    str += this.scrapValues();
+    let str = '';
+    if (Object.keys(this.values).length) {
+      str = this.scrapHelp();
+      str += this.scrapValues();
+    }
     return str;
   }
   public scrapHelp (): string {
     let str = '';
-    str += `# HELP ${this.key} ${this.description}\n`;
-    str += `# TYPE ${this.key} ${this.type}\n`;
+    if (Object.keys(this.values).length) {
+      str += `# HELP ${this.key} ${this.description}\n`;
+      str += `# TYPE ${this.key} ${this.type}\n`;
+    }
     return str;
   }
   public scrapValues (): string {

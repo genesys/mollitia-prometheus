@@ -18,7 +18,7 @@ declare module 'mollitia' {
   interface ModuleOptions {
     prometheus: PrometheusModuleOptions;
   }
-  class Timeout {
+  interface Timeout {
     prometheus: PrometheusTimeoutData;
   }
 }
