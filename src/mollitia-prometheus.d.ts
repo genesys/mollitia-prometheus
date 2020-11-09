@@ -10,6 +10,7 @@ declare module 'mollitia' {
   }
   interface Circuit {
     prometheus: PrometheusCircuitData;
+    fn (func: (...params: any[]) => Promise<any>, funcName?: string): Circuit;
   }
   // Module
   interface Module {

@@ -12,6 +12,9 @@ module.exports = {
     "/node_modules",
     "/test"
   ],
+  setupFilesAfterEnv: [
+    "./test/_setup.ts"
+  ],
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*.ts",

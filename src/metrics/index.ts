@@ -1,5 +1,6 @@
 export enum PrometheusMetricType {
-  COUNTER = 'counter'
+  COUNTER = 'counter',
+  GAUGE = 'gauge'
 }
 
 export interface PrometheusMetrics {

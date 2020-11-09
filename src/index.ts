@@ -100,6 +100,7 @@ export class PrometheusPlugin implements Mollitia.Plugin {
   onCircuitCreate (circuit: Mollitia.Circuit, options: Mollitia.CircuitOptions): void {
     circuit.prometheus = {
       name: options.prometheus.name,
+      perMethod: options.prometheus.perMethod ? options.prometheus.perMethod : false,
       labels: options.prometheus.labels || {},
       metrics: PrometheusCircuit.attachMetrics(circuit, options),
       scrap: () => {
@@ -109,6 +110,11 @@ export class PrometheusPlugin implements Mollitia.Plugin {
         }
         return scrap;
       }
+    };
+    const _fn = circuit.fn.bind(circuit);
+    circuit.fn = (promise: any, funcName?: string): Mollitia.Circuit => {
+      circuit.prometheus.methodName = funcName || promise.name;
+      return _fn(promise);
     };
     circuits.push(circuit);
   }

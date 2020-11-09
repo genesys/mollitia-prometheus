@@ -1,26 +1,26 @@
 import { PrometheusLabels, PrometheusMetric, PrometheusMetricType } from './index'
 
-interface PrometheusCounterOptions {
+interface PrometheusGaugeOptions {
   description: string;
   labels?: PrometheusLabels;
 }
 
-interface PrometheusCounterLabelValues {
+interface PrometheusGaugeLabelValues {
   [key: string]: number;
 }
 
-export class PrometheusCounter implements PrometheusMetric {
+export class PrometheusGauge implements PrometheusMetric {
   // Public Attributes
   public key: string;
   public type: PrometheusMetricType;
   public labels: PrometheusLabels;
-  public values: PrometheusCounterLabelValues;
+  public values: PrometheusGaugeLabelValues;
   public description?: string;
   // Private attributes
   // Constructor
-  constructor (key: string, options?: PrometheusCounterOptions) {
+  constructor (key: string, options?: PrometheusGaugeOptions) {
     this.key = key;
-    this.type = PrometheusMetricType.COUNTER;
+    this.type = PrometheusMetricType.GAUGE;
     this.labels = options?.labels || {};
     this.values = {};
     if (options?.description) { this.description = options?.description }
@@ -29,6 +29,13 @@ export class PrometheusCounter implements PrometheusMetric {
   public inc (value = 1, circuitName: string): number {
     this.values[circuitName] = this.values[circuitName] || 0;
     this.values[circuitName] += value;
+    return this.values[circuitName];
+  }
+  public get (circuitName: string): number {
+    return this.values[circuitName];
+  }
+  public set (value: number, circuitName: string): number {
+    this.values[circuitName] = value;
     return this.values[circuitName];
   }
   public scrap (): string {

@@ -1,27 +1,27 @@
 ---
 links:
-  - group: A Quick Overview
-    links:
-      - title: Introduction
-        path: /overview/introduction
-      - title: Getting Started
-        path: /overview/getting-started
+  - title: Home
+    path: /
+  - title: Getting Started
+    path: /getting-started
   - title: The Circuit
-    path: /api/circuit
+    path: /circuit
   - group: Module Metrics
     links:
+      - title: Fallback
+        path: /module/fallback
       - title: Cache
-        path: /api/module/cache
+        path: /module/cache
       - title: Retry
-        path: /api/module/retry
+        path: /module/retry
       - title: Timeout
-        path: /api/module/timeout
+        path: /module/timeout
       - title: Rate Limit
-        path: /api/module/rate-limit
+        path: /module/rate-limit
       - title: Bulkhead
-        path: /api/module/bulkhead
+        path: /module/bulkhead
       - title: Count Breaker
-        path: /api/module/breaker/sliding/count
+        path: /module/breaker/sliding/count
       - title: Time Breaker
-        path: /api/module/breaker/sliding/time
+        path: /module/breaker/sliding/time
 ---
