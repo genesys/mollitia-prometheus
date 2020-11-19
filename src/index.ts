@@ -1,6 +1,7 @@
 import * as Mollitia from 'mollitia';
 import * as PrometheusCircuit from './circuit';
 import * as PrometheusTimeout from './module/timeout';
+import * as PrometheusRetry from './module/timeout';
 
 interface ValueMetrics {
   [key: string]: {
@@ -71,7 +72,7 @@ export const scrap = (): string => {
       } else {
         _metrics[metric] = {
           help: circuit.prometheus.metrics[metric].scrapHelp(),
-          value: circuit.prometheus.metrics[metric].scrapValues() 
+          value: circuit.prometheus.metrics[metric].scrapValues()
         }
       }
     }
@@ -90,7 +91,7 @@ export const scrap = (): string => {
   }
   let str = '';
   for (const metric in _metrics) {
-    str += `${_metrics[metric].help}${_metrics[metric].value}`;
+    str += `${_metrics[metric].help}${_metrics[metric].value}\n`;
   }
   return str;
 };
@@ -123,6 +124,10 @@ export class PrometheusPlugin implements Mollitia.Plugin {
     switch (module.constructor.name) {
       case Mollitia.Timeout.name: {
         attachMetrics = PrometheusTimeout.attachMetrics;
+        break;
+      }
+      case Mollitia.Retry.name: {
+        attachMetrics = PrometheusRetry.attachMetrics;
         break;
       }
       default: {

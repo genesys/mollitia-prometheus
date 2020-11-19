@@ -13,47 +13,56 @@ export interface PrometheusCommonMetrics {
 }
 
 export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, options: Mollitia.CircuitOptions|Mollitia.ModuleOptions): PrometheusCommonMetrics => {
+  let labels = options.prometheus.labels;
+  if (executor.constructor.name !== Mollitia.Circuit.name) {
+    labels = { ...labels, module: options.prometheus.name };
+  }
   // Total Executions
   const total_executions = new PrometheusCounter(
-    'total_executions',
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}total_executions`,
     {
       description: 'Total Executions',
-      labels: options.prometheus.labels
+      labels
     }
   );
   // Total Success
   const total_success = new PrometheusCounter(
-    'total_success',
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}total_success`,
     {
       description: 'Total Success',
-      labels: options.prometheus.labels
+      labels
     }
   );
   // Duration
   let totalDuration = 0;
   const duration_max = new PrometheusGauge(
-    'duration_max',
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration_max`,
     {
       description: 'Maximum Duration of Circuit Execution',
-      labels: options.prometheus.labels
+      labels
     }
   );
   const duration_ave = new PrometheusGauge(
-    'duration_ave',
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration_ave`,
     {
       description: 'Average Duration of Circuit Execution',
-      labels: options.prometheus.labels
+      labels
     }
   );
   const duration_min = new PrometheusGauge(
-    'duration_min',
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration_min`,
     {
       description: 'Minimum Duration of Circuit Execution',
-      labels: options.prometheus.labels
+      labels
     }
   );
-  executor.on('execute', (circuit: Mollitia.Circuit, promise: Promise<any>) => {
-    const metricName = circuit.prometheus.perMethod ? `${circuit.prometheus.name}_${circuit.prometheus.methodName}` : circuit.prometheus.name;
+  executor.on('execute', (executor: Mollitia.Circuit|Mollitia.Module, promise: Promise<any>) => {
+    let metricName = '';
+    if (executor.constructor.name === Mollitia.Circuit.name) {
+      metricName = (executor as Mollitia.Circuit).prometheus.perMethod ? `${executor.prometheus.name}_${(executor as Mollitia.Circuit).prometheus.methodName}` : executor.prometheus.name;
+    } else {
+      metricName = executor.prometheus.name;
+    }
     const start = Date.now();
     total_executions.inc(1, metricName);
     promise

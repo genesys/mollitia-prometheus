@@ -8,6 +8,7 @@ interface PrometheusCircuitMetrics extends PrometheusCommonMetrics {
 
 export interface PrometheusCircuitOptions {
   name: string;
+  prefix?: string;
   perMethod?: boolean;
   methodName?: string;
   labels?: PrometheusLabels;

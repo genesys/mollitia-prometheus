@@ -40,11 +40,8 @@ export class PrometheusCounter implements PrometheusMetric {
     return str;
   }
   public scrapHelp (): string {
-    let str = '';
-    if (Object.keys(this.values).length) {
-      str += `# HELP ${this.key} ${this.description}\n`;
-      str += `# TYPE ${this.key} ${this.type}\n`;
-    }
+    let str = `# HELP ${this.key} ${this.description}\n`;
+    str += `# TYPE ${this.key} ${this.type}\n`;
     return str;
   }
   public scrapValues (): string {
