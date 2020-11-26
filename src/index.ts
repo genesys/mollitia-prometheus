@@ -99,53 +99,57 @@ export const scrap = (): string => {
 export class PrometheusPlugin implements Mollitia.Plugin {
   // Lifecycle
   onCircuitCreate (circuit: Mollitia.Circuit, options: Mollitia.CircuitOptions): void {
-    circuit.prometheus = {
-      name: options.prometheus.name,
-      perMethod: options.prometheus.perMethod ? options.prometheus.perMethod : false,
-      labels: options.prometheus.labels || {},
-      metrics: PrometheusCircuit.attachMetrics(circuit, options),
-      scrap: () => {
-        let scrap = '';
-        for (const metric in circuit.prometheus.metrics) {
-          scrap += circuit.prometheus.metrics[metric].scrap();
+    if (options.prometheus) {
+      circuit.prometheus = {
+        name: options.prometheus.name,
+        perMethod: options.prometheus.perMethod ? options.prometheus.perMethod : false,
+        labels: options.prometheus.labels || {},
+        metrics: PrometheusCircuit.attachMetrics(circuit, options),
+        scrap: () => {
+          let scrap = '';
+          for (const metric in circuit.prometheus.metrics) {
+            scrap += circuit.prometheus.metrics[metric].scrap();
+          }
+          return scrap;
         }
-        return scrap;
-      }
-    };
-    const _fn = circuit.fn.bind(circuit);
-    circuit.fn = (promise: any, funcName?: string): Mollitia.Circuit => {
-      circuit.prometheus.methodName = funcName || promise.name;
-      return _fn(promise);
-    };
-    circuits.push(circuit);
+      };
+      const _fn = circuit.fn.bind(circuit);
+      circuit.fn = (promise: any, funcName?: string): Mollitia.Circuit => {
+        circuit.prometheus.methodName = funcName || promise.name;
+        return _fn(promise);
+      };
+      circuits.push(circuit);
+    }
   }
   onModuleCreate (module: Mollitia.Module, options: Mollitia.ModuleOptions): void {
-    let attachMetrics;
-    switch (module.constructor.name) {
-      case Mollitia.Timeout.name: {
-        attachMetrics = PrometheusTimeout.attachMetrics;
-        break;
-      }
-      case Mollitia.Retry.name: {
-        attachMetrics = PrometheusRetry.attachMetrics;
-        break;
-      }
-      default: {
-        attachMetrics = () => { return {}; };
-      }
-    }
-    module.prometheus = {
-      name: options.prometheus.name,
-      labels: options.prometheus.labels || {},
-      metrics: attachMetrics(module, options),
-      scrap: () => {
-        let scrap = '';
-        for (const metric in module.prometheus.metrics) {
-          scrap += module.prometheus.metrics[metric].scrap();
+    if (options.prometheus) {
+      let attachMetrics;
+      switch (module.constructor.name) {
+        case Mollitia.Timeout.name: {
+          attachMetrics = PrometheusTimeout.attachMetrics;
+          break;
         }
-        return scrap;
+        case Mollitia.Retry.name: {
+          attachMetrics = PrometheusRetry.attachMetrics;
+          break;
+        }
+        default: {
+          attachMetrics = () => { return {}; };
+        }
       }
-    };
-    modules.push(module);
+      module.prometheus = {
+        name: options.prometheus.name,
+        labels: options.prometheus.labels || {},
+        metrics: attachMetrics(module, options),
+        scrap: () => {
+          let scrap = '';
+          for (const metric in module.prometheus.metrics) {
+            scrap += module.prometheus.metrics[metric].scrap();
+          }
+          return scrap;
+        }
+      };
+      modules.push(module);
+    }
   }
 }
