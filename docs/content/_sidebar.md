@@ -16,7 +16,7 @@ links:
         path: /module/retry
       - title: Timeout
         path: /module/timeout
-      - title: Rate Limit
+      - title: Ratelimit
         path: /module/rate-limit
       - title: Bulkhead
         path: /module/bulkhead

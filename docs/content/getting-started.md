@@ -3,21 +3,21 @@ title: Prometheus - Getting Started
 ---
 # Getting Started
 
-Install and add the plugin to `Mollitia` in your application.
+Install and add the addon to `Mollitia` in your application.
 
 ``` bash
 # Install mollitia
 npm install mollitia --save
-# Install the prometheus plugin
+# Install the prometheus addon
 npm install @mollitia/prometheus --save
 ```
 
 ``` javascript
 // Javascript
 const Mollitia = require('mollitia');
-const { PrometheusPlugin } = require('@mollitia/prometheus');
+const { PrometheusAddon } = require('@mollitia/prometheus');
 
-Mollitia.use(new PrometheusPlugin());
+Mollitia.use(new PrometheusAddon());
 ```
 
 Then, add `Prometheus` options when creating circuits or modules:

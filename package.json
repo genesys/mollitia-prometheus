@@ -1,7 +1,7 @@
 {
   "name": "@mollitia/prometheus",
   "version": "0.0.1",
-  "description": "Prometheus Mollitia Plugin",
+  "description": "Prometheus Mollitia Addon",
   "main": "dist/mollitia-prometheus.umd.js",
   "module": "dist/mollitia-prometheus.es5.js",
   "typings": "dist/types/mollitia-prometheus.d.ts",

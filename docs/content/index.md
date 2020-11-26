@@ -1,13 +1,13 @@
 ---
 title: Mollitia Prometheus
-description: Prometheus Mollitia Plugin
+description: Prometheus Mollitia Addon
 ---
 
 <!-- TODO Badges -->
 
 # Mollitia Prometheus
 
-The `Mollitia` [Prometheus](https://prometheus.io/) plugin adds metrics on every circuit and module so that you can monitor and analyze your applications.
+The `Mollitia` [Prometheus](https://prometheus.io/) addon adds metrics on every circuit and module so that you can monitor and analyze your applications.
 
 ## Documentation
 
@@ -21,24 +21,24 @@ The `Mollitia` [Prometheus](https://prometheus.io/) plugin adds metrics on every
 ``` bash
 # Install mollitia
 npm install mollitia --save
-# Install the prometheus plugin
+# Install the prometheus addon
 npm install @mollitia/prometheus --save
 ```
 
 ``` javascript
 // Javascript
 const Mollitia = require('mollitia');
-const { PrometheusPlugin } = require('@mollitia/prometheus');
+const { PrometheusAddon } = require('@mollitia/prometheus');
 
-Mollitia.use(new PrometheusPlugin());
+Mollitia.use(new PrometheusAddon());
 ```
 
 ``` typescript
 // ES6 or TypeScript
 import * as Mollitia from 'mollitia';
-import { PrometheusPlugin } from '@mollitia/prometheus';
+import { PrometheusAddon } from '@mollitia/prometheus';
 
-Mollitia.use(new PrometheusPlugin());
+Mollitia.use(new PrometheusAddon());
 ```
 
 ### With CDN
@@ -48,7 +48,7 @@ Mollitia.use(new PrometheusPlugin());
 <script type="text/javascript" src="https://unpkg.com/mollitia"></script>
 <script type="text/javascript" src="https://unpkg.com/@mollitia/prometheus"></script>
 <script>
-  window.Mollitia.use(window.MollitiaPrometheus.PrometheusPlugin());
+  window.Mollitia.use(window.MollitiaPrometheus.PrometheusAddon());
 </script>
 ```
 

@@ -96,7 +96,7 @@ export const scrap = (): string => {
   return str;
 };
 
-export class PrometheusPlugin implements Mollitia.Plugin {
+export class PrometheusAddon implements Mollitia.Addon {
   // Lifecycle
   onCircuitCreate (circuit: Mollitia.Circuit, options: Mollitia.CircuitOptions): void {
     if (options.prometheus) {
