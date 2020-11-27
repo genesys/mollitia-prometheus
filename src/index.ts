@@ -23,7 +23,13 @@ interface ScrapMetrics {
   }
 }
 
+/**
+ * Array containing every circuit.
+ */
 export const circuits: Mollitia.Circuit[] = [];
+/**
+ * Array containing every modules.
+ */
 export const modules: Mollitia.Module[] = [];
 
 export const metrics = (): ValueMetrics => {

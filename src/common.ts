@@ -7,6 +7,7 @@ export interface PrometheusCommonMetrics {
   [key: string]: PrometheusMetric;
   total_executions: PrometheusCounter;
   total_success: PrometheusCounter;
+  total_failures: PrometheusCounter;
   duration_max: PrometheusGauge;
   duration_ave: PrometheusGauge;
   duration_min: PrometheusGauge;
@@ -30,6 +31,13 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
     `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}total_success`,
     {
       description: 'Total Success',
+      labels
+    }
+  );
+  const total_failures = new PrometheusCounter(
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}total_failures`,
+    {
+      description: 'Total Failures',
       labels
     }
   );
@@ -79,11 +87,15 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
         }
         const count =  total_success.inc(1, metricName);
         duration_ave.set(totalDuration / count, metricName);
+      })
+      .catch(() => {
+        total_failures.inc(1, metricName);
       });
   });
   return {
     total_executions,
     total_success,
+    total_failures,
     duration_max,
     duration_ave,
     duration_min
