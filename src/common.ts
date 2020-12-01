@@ -5,11 +5,29 @@ import { PrometheusGauge } from './metrics/gauge';
 
 export interface PrometheusCommonMetrics {
   [key: string]: PrometheusMetric;
+  /**
+   * The total count of executions.
+   */
   total_executions: PrometheusCounter;
+  /**
+   * The total count of success.
+   */
   total_success: PrometheusCounter;
+  /**
+   * The total count of failures.
+   */
   total_failures: PrometheusCounter;
+  /**
+   * The maximum duration of execution.
+   */
   duration_max: PrometheusGauge;
+  /**
+   * The average duration of execution.
+   */
   duration_ave: PrometheusGauge;
+  /**
+   * The minimum duration of execution.
+   */
   duration_min: PrometheusGauge;
 }
 

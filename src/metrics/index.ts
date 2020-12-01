@@ -15,8 +15,7 @@ export interface PrometheusMetric {
   key: string;
   type: PrometheusMetricType;
   labels: PrometheusLabels;
-  // TODO
-  values: any;
+  values: PrometheusMetricLabelValues;
   scrap (): string;
   scrapHelp (): string;
   scrapValues (): string;

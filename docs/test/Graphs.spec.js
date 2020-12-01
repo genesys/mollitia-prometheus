@@ -1,10 +1,10 @@
 import * as Mollitia from 'mollitia';
 import { mount } from '@vue/test-utils';
-import Circuit from '@/components/Circuit.vue';
+import Scrap from '@/components/Scrap.vue';
 
-describe('Circuit', () => {
+describe('Scrap', () => {
   it('is a Vue instance', () => {
-    const wrapper = mount(Circuit, {
+    const wrapper = mount(Scrap, {
       mocks: {
         $mollitia: Mollitia
       }

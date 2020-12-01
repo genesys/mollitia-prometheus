@@ -1,18 +1,128 @@
 import * as Mollitia from 'mollitia';
 import * as PrometheusCircuit from './circuit';
 import * as PrometheusTimeout from './module/timeout';
-import * as PrometheusRetry from './module/timeout';
+import * as PrometheusRetry from './module/retry';
+import * as PrometheusBulkhead from './module/bulkhead';
+import * as PrometheusCache from './module/cache';
+import * as PrometheusRatelimit from './module/ratelimit';
+import * as PrometheusFallback from './module/fallback';
+import * as PrometheusBreaker from './module/breaker';
+import { PrometheusModuleData, PrometheusModuleOptions } from './module';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type CircuitFunction = (...params: any[]) => Promise<any>;
+
+// Declaration Overriding
+declare module 'mollitia' {
+  // Circuit
+  interface CircuitOptions {
+    /**
+     * Prometheus specific Circuit options. [Prometheus Addon]
+     */
+    prometheus: PrometheusCircuit.PrometheusCircuitOptions;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface Circuit {
+    /**
+     * Prometheus Circuit helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusCircuit.PrometheusCircuitData;
+    /**
+     * Modifies the Circuit function.
+     * @param func The Circuit function.
+     * @param funcName The Method name. (snake_case). [Prometheus Addon]
+     */
+    fn (func: CircuitFunction, funcName?: string): Circuit;
+  }
+  // Module
+  interface Module {
+    /**
+     * Prometheus Module helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusModuleData;
+  }
+  interface ModuleOptions {
+    /**
+     * Prometheus specific Module options. [Prometheus Addon]
+     */
+    prometheus: PrometheusModuleOptions;
+  }
+  interface Timeout {
+    /**
+     * Prometheus Timeout helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusTimeout.PrometheusTimeoutData;
+  }
+  interface Retry {
+    /**
+     * Prometheus Retry helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusRetry.PrometheusRetryData;
+  }
+  interface Cache {
+    /**
+     * Prometheus Cache helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusCache.PrometheusCacheData;
+  }
+  interface Bulkhead {
+    /**
+     * Prometheus Bulkhead helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusBulkhead.PrometheusBulkheadData;
+  }
+  interface Fallback {
+    /**
+     * Prometheus Fallback helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusFallback.PrometheusFallbackData;
+  }
+  interface Ratelimit {
+    /**
+     * Prometheus Ratelimit helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusRatelimit.PrometheuRatelimitData;
+  }
+  interface SlidingTimeBreaker {
+    /**
+     * Prometheus Sliding Time Breaker helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusBreaker.PrometheuBreakerData;
+  }
+  interface SlidingCountBreaker {
+    /**
+     * Prometheus Sliding Count Breaker helper. [Prometheus Addon]
+     */
+    prometheus: PrometheusBreaker.PrometheuBreakerData;
+  }
+}
+
+interface GlobalMetrics {
+  [key: string]: number;
+}
+
+interface ModuleMetrics {
+  [key: string]: GlobalMetrics;
+}
 
 interface ValueMetrics {
   [key: string]: {
-    circuits: {
-      [key: string]: number;
-    },
-    modules: {
-      [key: string]: {
-        [key: string]: number;
-      }
-    }
+    /**
+     * Object containing all Circuit metrics. [Prometheus Addon]
+     * @example
+     * const metrics = MollitiaPrometheus.metrics();
+     * console.info(metrics.total_executions.circuits.MyCircuit);
+     * // Returns the number of time MyCircuit has been executed.
+     */
+    circuits: GlobalMetrics;
+    /**
+     * Object containing all Module metrics. [Prometheus Addon]
+     * @example
+     * const metrics = MollitiaPrometheus.metrics();
+     * console.info(metrics.total_executions.modules.MyModule.MyCircuit);
+     * // Returns the number of time the MyModule has been executed in MyCircuit.
+     */
+    modules: ModuleMetrics;
   }
 }
 
@@ -32,6 +142,13 @@ export const circuits: Mollitia.Circuit[] = [];
  */
 export const modules: Mollitia.Module[] = [];
 
+/**
+ * Returns the full Mollitia metrics (Circuits and Modules) [Prometheus Addon]
+ * @example
+ * const metrics = MollitiaPrometheus.metrics();
+ * console.info(metrics.total_executions.circuits.MyCircuit);
+ * // Returns the number of time MyCircuit has been executed.
+ */
 export const metrics = (): ValueMetrics => {
   const _metrics: ValueMetrics = {};
   for (const circuit of circuits) {
@@ -69,6 +186,9 @@ export const metrics = (): ValueMetrics => {
   return _metrics;
 };
 
+/**
+ * Returns the full Prometheus scrap (Circuits and Modules) [Prometheus Addon]
+ */
 export const scrap = (): string => {
   const _metrics: ScrapMetrics = {};
   for (const circuit of circuits) {
@@ -102,6 +222,11 @@ export const scrap = (): string => {
   return str;
 };
 
+/**
+ * The PrometheusAddon Class, that should be added to the core Mollitia module. [Prometheus Addon]
+ * @example
+ * Mollitia.use(new MollitiaPrometheus.PrometheusAddon());
+ */
 export class PrometheusAddon implements Mollitia.Addon {
   // Lifecycle
   onCircuitCreate (circuit: Mollitia.Circuit, options: Mollitia.CircuitOptions): void {
@@ -137,6 +262,28 @@ export class PrometheusAddon implements Mollitia.Addon {
         }
         case Mollitia.Retry.name: {
           attachMetrics = PrometheusRetry.attachMetrics;
+          break;
+        }
+        case Mollitia.Bulkhead.name: {
+          attachMetrics = PrometheusBulkhead.attachMetrics;
+          break;
+        }
+        case Mollitia.Cache.name: {
+          attachMetrics = PrometheusCache.attachMetrics;
+          break;
+        }
+        case Mollitia.Ratelimit.name: {
+          attachMetrics = PrometheusRatelimit.attachMetrics;
+          break;
+        }
+        case Mollitia.Fallback.name: {
+          attachMetrics = PrometheusFallback.attachMetrics;
+          break;
+        }
+        case Mollitia.SlidingWindowBreakerOptions.name:
+        case Mollitia.SlidingCountBreaker.name:
+        case Mollitia.SlidingTimeBreaker.name: {
+          attachMetrics = PrometheusBreaker.attachMetrics;
           break;
         }
         default: {

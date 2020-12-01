@@ -1,12 +1,8 @@
-import { PrometheusLabels, PrometheusMetric, PrometheusMetricType } from './index'
+import { PrometheusLabels, PrometheusMetric, PrometheusMetricLabelValues, PrometheusMetricType } from './index'
 
 interface PrometheusGaugeOptions {
   description: string;
   labels?: PrometheusLabels;
-}
-
-interface PrometheusGaugeLabelValues {
-  [key: string]: number;
 }
 
 export class PrometheusGauge implements PrometheusMetric {
@@ -14,7 +10,7 @@ export class PrometheusGauge implements PrometheusMetric {
   public key: string;
   public type: PrometheusMetricType;
   public labels: PrometheusLabels;
-  public values: PrometheusGaugeLabelValues;
+  public values: PrometheusMetricLabelValues;
   public description?: string;
   // Private attributes
   // Constructor

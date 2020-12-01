@@ -4,7 +4,7 @@
   "description": "Prometheus Mollitia Addon",
   "main": "dist/mollitia-prometheus.umd.js",
   "module": "dist/mollitia-prometheus.es5.js",
-  "typings": "dist/types/mollitia-prometheus.d.ts",
+  "typings": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],

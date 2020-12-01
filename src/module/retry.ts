@@ -14,5 +14,9 @@ export interface PrometheusRetryData extends PrometheusModuleOptions {
 
 export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleOptions): PrometheusRetryMetrics => {
   const metrics = commonMetrics(module, options);
+  // TODO success_without_retry
+  // TODO success_with_retry
+  // TODO failures_without_retry
+  // TODO failures_with_retry
   return metrics;
 }
