@@ -81,19 +81,19 @@ declare module 'mollitia' {
     /**
      * Prometheus Ratelimit helper. [Prometheus Addon]
      */
-    prometheus: PrometheusRatelimit.PrometheuRatelimitData;
+    prometheus: PrometheusRatelimit.PrometheusRatelimitData;
   }
   interface SlidingTimeBreaker {
     /**
      * Prometheus Sliding Time Breaker helper. [Prometheus Addon]
      */
-    prometheus: PrometheusBreaker.PrometheuBreakerData;
+    prometheus: PrometheusBreaker.PrometheusBreakerData;
   }
   interface SlidingCountBreaker {
     /**
      * Prometheus Sliding Count Breaker helper. [Prometheus Addon]
      */
-    prometheus: PrometheusBreaker.PrometheuBreakerData;
+    prometheus: PrometheusBreaker.PrometheusBreakerData;
   }
 }
 

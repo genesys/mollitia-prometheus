@@ -3,16 +3,16 @@ import { PrometheusModuleOptions } from '../index';
 import { commonMetrics, PrometheusCommonMetrics } from '../../common';
 import { PrometheusMetric } from '../../metrics';
 
-interface PrometheuBreakerMetrics extends PrometheusCommonMetrics {
+interface PrometheusBreakerMetrics extends PrometheusCommonMetrics {
   [key: string]: PrometheusMetric;
 }
 
-export interface PrometheuBreakerData extends PrometheusModuleOptions {
-  metrics: PrometheuBreakerMetrics;
+export interface PrometheusBreakerData extends PrometheusModuleOptions {
+  metrics: PrometheusBreakerMetrics;
   scrap (): string;
 }
 
-export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleOptions): PrometheuBreakerMetrics => {
+export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleOptions): PrometheusBreakerMetrics => {
   const metrics = commonMetrics(module, options);
   // TODO breaker_state
   // TODO failure_rate

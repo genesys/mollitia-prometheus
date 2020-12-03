@@ -3,16 +3,16 @@ import { PrometheusModuleOptions } from './index';
 import { commonMetrics, PrometheusCommonMetrics } from '../common';
 import { PrometheusMetric } from '../metrics';
 
-interface PrometheuRatelimitMetrics extends PrometheusCommonMetrics {
+interface PrometheusRatelimitMetrics extends PrometheusCommonMetrics {
   [key: string]: PrometheusMetric;
 }
 
-export interface PrometheuRatelimitData extends PrometheusModuleOptions {
-  metrics: PrometheuRatelimitMetrics;
+export interface PrometheusRatelimitData extends PrometheusModuleOptions {
+  metrics: PrometheusRatelimitMetrics;
   scrap (): string;
 }
 
-export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleOptions): PrometheuRatelimitMetrics => {
+export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleOptions): PrometheusRatelimitMetrics => {
   const metrics = commonMetrics(module, options);
   // TODO total_failures_ratelimit
   return metrics;
