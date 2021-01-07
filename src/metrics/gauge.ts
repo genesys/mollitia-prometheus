@@ -55,7 +55,8 @@ export class PrometheusGauge implements PrometheusMetric {
         for (const label in this.labels) {
           labels+= `, ${label}="${this.labels[label]}"`;
         }
-        res += `${this.key}{${labels}} ${this.values[circuit]}\n`;
+        const valWithMax2Digits = this.values[circuit] % 1 ? this.values[circuit].toFixed(2) : this.values[circuit];
+        res += `${this.key}{${labels}} ${valWithMax2Digits}\n`;
       }
     }
     return res;
