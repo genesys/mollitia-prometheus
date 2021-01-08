@@ -48,7 +48,7 @@ Mollitia.use(new PrometheusAddon());
 <script type="text/javascript" src="https://unpkg.com/mollitia"></script>
 <script type="text/javascript" src="https://unpkg.com/@mollitia/prometheus"></script>
 <script>
-  window.Mollitia.use(window.MollitiaPrometheus.PrometheusAddon());
+  window.Mollitia.use(new window.MollitiaPrometheus.PrometheusAddon());
 </script>
 ```
 
