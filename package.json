@@ -9,6 +9,30 @@
     "dist"
   ],
   "author": "Jérémie Pichon <jeremie.pichon@genesys.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/genesys/mollitia-prometheus"
+  },
+  "bugs": {
+    "url": "https://github.com/genesys/mollitia-prometheus/issues"
+  },
+  "keywords": [
+    "mollitia",
+    "mollitia-prometheus",
+    "resiliency",
+    "resilience",
+    "node",
+    "nodejs",
+    "javascript",
+    "typescript",
+    "monitoring",
+    "time-series",
+    "metrics",
+    "alerting",
+    "prometheus",
+    "graphing"
+  ],
   "scripts": {
     "install": "cd docs && npm install",
     "dev": "run-p dev:lib dev:docs",
@@ -30,10 +54,10 @@
     "build:lib:tsc": "tsc --module commonjs",
     "build:lib:rollup": "rollup -c rollup.config.ts",
     "build:docs": "cd docs && npm run build",
-    "serve": "cd docs && npm run serve",
-    "deploy": "run-s deploy:build deploy:push",
-    "deploy:build": "cd docs && docker build -t 135.39.45.156:5000/mollitia-prometheus:latest .",
-    "deploy:push": "cd docs && docker push 135.39.45.156:5000/mollitia-prometheus:latest"
+    "serve": "cd docs && npm run serve"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@types/jest": "26.0.14",

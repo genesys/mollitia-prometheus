@@ -1,4 +1,4 @@
-# Contributing To Mollitia
+# Contributing To Mollitia Prometheus
 
 ## Issues
 
