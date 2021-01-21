@@ -82,6 +82,8 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
       labels
     }
   );
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   executor.on('execute', (executor: Mollitia.Circuit|Mollitia.Module, promise: Promise<any>) => {
     let metricName = '';
     if (executor.constructor.name === Mollitia.Circuit.name) {

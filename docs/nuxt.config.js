@@ -4,11 +4,11 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'Mollitia',
+    title: 'Mollitia Prometheus',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'JavaScript Resilience Library' }
+      { hid: 'description', name: 'description', content: 'Prometheus Mollitia Addon' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -68,4 +68,4 @@ export default {
     ],
     fallback: true
   }
-}
+};

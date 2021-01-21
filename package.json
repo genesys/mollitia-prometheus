@@ -34,7 +34,6 @@
     "graphing"
   ],
   "scripts": {
-    "install": "cd docs && npm install",
     "dev": "run-p dev:lib dev:docs",
     "dev:lib": "npm run build:lib:tsc && run-p dev:lib:tsc dev:lib:rollup",
     "dev:lib:tsc": "tsc --watch --module commonjs",
@@ -66,6 +65,7 @@
     "@typescript-eslint/parser": "4.1.1",
     "eslint": "7.9.0",
     "jest": "26.4.2",
+    "mollitia": "0.0.3",
     "npm-run-all": "4.1.5",
     "rimraf": "3.0.2",
     "rollup": "2.27.1",
@@ -77,5 +77,6 @@
     "ts-jest": "26.3.0",
     "ts-node": "9.0.0",
     "typescript": "4.0.2"
-  }
+  },
+  "dependencies": {}
 }

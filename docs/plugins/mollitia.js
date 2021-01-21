@@ -6,4 +6,4 @@ Mollitia.use(new MollitiaPrometheus.PrometheusAddon());
 export default (context, inject) => {
   inject('mollitia', Mollitia);
   inject('mollitiaPrometheus', MollitiaPrometheus);
-}
+};
