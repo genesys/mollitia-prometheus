@@ -3,6 +3,9 @@ import { PrometheusMetric } from './metrics';
 import { PrometheusCounter } from './metrics/counter';
 import { PrometheusGauge } from './metrics/gauge';
 
+type durationType = {
+  [key: string]: number;
+}
 export interface PrometheusCommonMetrics {
   [key: string]: PrometheusMetric;
   /**
@@ -29,6 +32,10 @@ export interface PrometheusCommonMetrics {
    * The minimum duration of execution.
    */
   duration_min: PrometheusGauge;
+  /**
+   * The number of execution used for the duration.
+   */
+  duration_count: PrometheusGauge;
 }
 
 export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, options: Mollitia.CircuitOptions|Mollitia.ModuleOptions): PrometheusCommonMetrics => {
@@ -60,26 +67,33 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
     }
   );
   // Duration
-  let totalDuration = 0;
+  const totalDuration: durationType = {};
   const duration_max = new PrometheusGauge(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration_max`,
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration`,
     {
       description: 'Maximum Duration of Circuit Execution',
-      labels
+      labels: { ...labels, metricType: "MAX" }
     }
   );
   const duration_ave = new PrometheusGauge(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration_ave`,
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration`,
     {
       description: 'Average Duration of Circuit Execution',
-      labels
+      labels: { ...labels, metricType: "AVG" }
     }
   );
   const duration_min = new PrometheusGauge(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration_min`,
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration`,
     {
       description: 'Minimum Duration of Circuit Execution',
-      labels
+      labels: { ...labels, metricType: "MIN" }
+    }
+  );
+  const duration_count = new PrometheusGauge(
+    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration`,
+    {
+      description: 'Minimum Duration of Circuit Execution',
+      labels: { ...labels, metricType: "COUNT" }
     }
   );
 
@@ -91,12 +105,18 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
     } else {
       metricName = executor.prometheus.name;
     }
+    totalDuration[metricName] = totalDuration[metricName] || 0;
+
     const start = Date.now();
     total_executions.inc(1, metricName);
     promise
       .then(() => {
+        const durationCount = duration_count.inc(1, metricName);
+        if (durationCount === 1) {
+          totalDuration[metricName] = 0;
+        }
         const duration = Date.now() - start;
-        totalDuration += duration;
+        totalDuration[metricName] += duration;
         const min = duration_min.get(metricName);
         if (!min || (min > duration)) {
           duration_min.set(duration, metricName);
@@ -105,8 +125,7 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
         if (!max || (max < duration)) {
           duration_max.set(duration, metricName);
         }
-        const count =  total_success.inc(1, metricName);
-        duration_ave.set(totalDuration / count, metricName);
+        duration_ave.set(totalDuration[metricName] / durationCount, metricName);
       })
       .catch(() => {
         total_failures.inc(1, metricName);
@@ -118,6 +137,7 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
     total_failures,
     duration_max,
     duration_ave,
-    duration_min
+    duration_min,
+    duration_count
   };
 }

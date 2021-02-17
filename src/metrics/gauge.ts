@@ -59,6 +59,7 @@ export class PrometheusGauge implements PrometheusMetric {
         res += `${this.key}{${labels}} ${valWithMax2Digits}\n`;
       }
     }
+    this.values = {};
     return res;
   }
 }
