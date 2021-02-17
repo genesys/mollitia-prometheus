@@ -1,7 +1,14 @@
 # Changelog
 
-## [0.0.2](https://github.com/genesys/mollitia-prometheus/compare/0.0.1...0.0.2)
+## [0.0.3](https://github.com/genesys/mollitia-prometheus/compare/0.0.2...0.0.3)
 
+- update version [`5e7b31d`](https://github.com/genesys/mollitia-prometheus/commit/5e7b31df317d50bd90ae697460aa1f4600f120fd)
+- Fix issues with gauge [`90b596a`](https://github.com/genesys/mollitia-prometheus/commit/90b596ade29603fa4caec0095307bf424407311b)
+- Fix issues with Gauge [`203380d`](https://github.com/genesys/mollitia-prometheus/commit/203380d1faaabba91c0df29cf59d77bcaed3e6cb)
+
+## [0.0.2](https://github.com/genesys/mollitia-prometheus/compare/0.0.1...0.0.2) (2021-01-21)
+
+- Release mollitia-prometheus@0.0.2 [`0676eb9`](https://github.com/genesys/mollitia-prometheus/commit/0676eb964f074a8ec380b57ee426476abe5b5c45)
 - update version [`17a4a05`](https://github.com/genesys/mollitia-prometheus/commit/17a4a058e9150da1334829d5b8a5a0a4a87dc921)
 
 ## 0.0.1 (2021-01-21)
