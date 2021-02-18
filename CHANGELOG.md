@@ -1,7 +1,12 @@
 # Changelog
 
-## [0.0.3](https://github.com/genesys/mollitia-prometheus/compare/0.0.2...0.0.3)
+## [0.0.4](https://github.com/genesys/mollitia-prometheus/compare/0.0.3...0.0.4)
 
+- make prometheus option optional [`47212fc`](https://github.com/genesys/mollitia-prometheus/commit/47212fc1d2e2474c62262f3ceabd335cb833a8a5)
+
+## [0.0.3](https://github.com/genesys/mollitia-prometheus/compare/0.0.2...0.0.3) (2021-02-17)
+
+- Release mollitia-prometheus@0.0.3 [`b64b59e`](https://github.com/genesys/mollitia-prometheus/commit/b64b59ede62280b4f2b5f6cd407be00cb5d2bbdc)
 - update version [`5e7b31d`](https://github.com/genesys/mollitia-prometheus/commit/5e7b31df317d50bd90ae697460aa1f4600f120fd)
 - Fix issues with gauge [`90b596a`](https://github.com/genesys/mollitia-prometheus/commit/90b596ade29603fa4caec0095307bf424407311b)
 - Fix issues with Gauge [`203380d`](https://github.com/genesys/mollitia-prometheus/commit/203380d1faaabba91c0df29cf59d77bcaed3e6cb)
