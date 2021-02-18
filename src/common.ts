@@ -39,13 +39,13 @@ export interface PrometheusCommonMetrics {
 }
 
 export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, options: Mollitia.CircuitOptions|Mollitia.ModuleOptions): PrometheusCommonMetrics => {
-  let labels = options.prometheus.labels;
+  let labels = options.prometheus?.labels;
   if (executor.constructor.name !== Mollitia.Circuit.name) {
-    labels = { ...labels, module: options.prometheus.name };
+    labels = { ...labels, module: options.prometheus?.name || '' };
   }
   // Total Executions
   const total_executions = new PrometheusCounter(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}total_executions`,
+    `${options.prometheus?.prefix ? `${options.prometheus?.prefix}_` : ''}total_executions`,
     {
       description: 'Total Executions',
       labels
@@ -53,14 +53,14 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
   );
   // Total Success
   const total_success = new PrometheusCounter(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}total_success`,
+    `${options.prometheus?.prefix ? `${options.prometheus?.prefix}_` : ''}total_success`,
     {
       description: 'Total Success',
       labels
     }
   );
   const total_failures = new PrometheusCounter(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}total_failures`,
+    `${options.prometheus?.prefix ? `${options.prometheus?.prefix}_` : ''}total_failures`,
     {
       description: 'Total Failures',
       labels
@@ -69,30 +69,30 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
   // Duration
   const totalDuration: durationType = {};
   const duration_max = new PrometheusGauge(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration`,
+    `${options.prometheus?.prefix ? `${options.prometheus?.prefix}_` : ''}duration`,
     {
       description: 'Maximum Duration of Circuit Execution',
       labels: { ...labels, metricType: "MAX" }
     }
   );
   const duration_ave = new PrometheusGauge(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration`,
+    `${options.prometheus?.prefix ? `${options.prometheus?.prefix}_` : ''}duration`,
     {
       description: 'Average Duration of Circuit Execution',
       labels: { ...labels, metricType: "AVG" }
     }
   );
   const duration_min = new PrometheusGauge(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration`,
+    `${options.prometheus?.prefix ? `${options.prometheus?.prefix}_` : ''}duration`,
     {
       description: 'Minimum Duration of Circuit Execution',
       labels: { ...labels, metricType: "MIN" }
     }
   );
   const duration_count = new PrometheusGauge(
-    `${options.prometheus.prefix ? `${options.prometheus.prefix}_` : ''}duration`,
+    `${options.prometheus?.prefix ? `${options.prometheus?.prefix}_` : ''}duration`,
     {
-      description: 'Minimum Duration of Circuit Execution',
+      description: 'Count of Circuit Execution',
       labels: { ...labels, metricType: "COUNT" }
     }
   );

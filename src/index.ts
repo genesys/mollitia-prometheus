@@ -19,7 +19,7 @@ declare module 'mollitia' {
     /**
      * Prometheus specific Circuit options. [Prometheus Addon]
      */
-    prometheus: PrometheusCircuit.PrometheusCircuitOptions;
+    prometheus?: PrometheusCircuit.PrometheusCircuitOptions;
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Circuit {
@@ -45,7 +45,7 @@ declare module 'mollitia' {
     /**
      * Prometheus specific Module options. [Prometheus Addon]
      */
-    prometheus: PrometheusModuleOptions;
+    prometheus?: PrometheusModuleOptions;
   }
   interface Timeout {
     /**
