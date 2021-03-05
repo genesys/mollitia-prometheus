@@ -5,7 +5,7 @@ import * as MollitiaPrometheus from '../src/index';
 Mollitia.use(new MollitiaPrometheus.PrometheusAddon());
 
 const delay = (delay = 1) => {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve();
     }, delay);

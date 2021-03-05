@@ -101,7 +101,10 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
   executor.on('execute', (executor: Mollitia.Circuit|Mollitia.Module, promise: Promise<any>) => {
     let metricName = '';
     if (executor.constructor.name === Mollitia.Circuit.name) {
-      metricName = (executor as Mollitia.Circuit).prometheus.perMethod ? `${executor.prometheus.name}_${(executor as Mollitia.Circuit).prometheus.methodName}` : executor.prometheus.name;
+      metricName =
+        (executor as Mollitia.Circuit).prometheus.perMethod ?
+        `${executor.prometheus.name}_${(executor as Mollitia.Circuit).prometheus.methodName}` :
+        executor.prometheus.name;
     } else {
       metricName = executor.prometheus.name;
     }

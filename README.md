@@ -1,12 +1,16 @@
 # Mollitia - Prometheus Addon
 
-<!-- TODO Badges -->
-
-# Mollitia Prometheus
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=genesys_mollitia-prometheus&metric=alert_status)](https://sonarcloud.io/dashboard?id=genesys_mollitia-prometheus)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=genesys_mollitia-prometheus&metric=coverage)](https://sonarcloud.io/dashboard?id=genesys_mollitia-prometheus)
+[![Version](https://img.shields.io/npm/v/@mollitia/prometheus)](https://www.npmjs.com/package/@mollitia/prometheus)
+[![Downloads](https://img.shields.io/npm/dt/@mollitia/prometheus)](https://www.npmjs.com/package/@mollitia/prometheus)
+[![License](https://img.shields.io/npm/l/@mollitia/prometheus)](https://github.com/cadgerfeast/@mollitia/prometheus/blob/master/LICENSE)
 
 The `Mollitia` [Prometheus](https://prometheus.io/) addon adds metrics on every circuit and module so that you can monitor and analyze your applications.
 
 ## Documentation
+
+[Full documentation website can be found here.](https://genesys.github.io/mollitia-prometheus/)
 
 ## Installation
 
@@ -47,8 +51,6 @@ Mollitia.use(new PrometheusAddon());
 ```
 
 ## Features
-
-<!-- TODO change links -->
 
 - Works on Node and on browser (even **Internet Explorer 11**, wow).
 - Adds metrics for each circuit and module created on your application.

@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        token: ${{ secrets.ACCESS_TOKEN }}
+        token: ${{((github.event_name == 'push') && secrets.ACCESS_TOKEN) || ((github.event_name != 'push') && secrets.GITHUB_TOKEN)}}
         fetch-depth: 0
     - uses: actions/setup-node@v1
       with:
@@ -52,6 +52,25 @@ jobs:
           echo ::set-output name=SHOULD_RELEASE::true
           echo current version is $CURRENT
         fi
+    - name: Fix Coverage Paths
+      working-directory: ./coverage
+      run: |
+        sed -i 's/\/home\/runner\/work\/mollitia-prometheus\/mollitia-prometheus\//\/github\/workspace\//g' lcov.info
+        sed -i 's/\/home\/runner\/work\/mollitia-prometheus\/mollitia-prometheus\//\/github\/workspace\//g' clover.xml
+    - name: Sonar
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectVersion=${{steps.env.outputs.VERSION}}
+    - name: Documentation
+      if: github.event_name == 'push'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.ACCESS_TOKEN }}
+        publish_dir: ./docs/dist
     - name: Release
       if: github.event_name == 'push' && steps.env.outputs.SHOULD_RELEASE == 'true'
       run: npx release-it --ci --verbose --disable-metrics --increment=${{steps.env.outputs.VERSION}}

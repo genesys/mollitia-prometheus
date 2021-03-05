@@ -4,3 +4,4 @@
 /node_modules
 /plugins/libs
 /static/sw.js
+/.eslintrc.js
