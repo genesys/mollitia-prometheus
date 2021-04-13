@@ -1,8 +1,14 @@
 # Changelog
 
-## [0.0.5](https://github.com/genesys/mollitia-prometheus/compare/0.0.4...0.0.5)
+## [0.0.6](https://github.com/genesys/mollitia-prometheus/compare/0.0.5...0.0.6)
+
+- Update 3rd party libraries [`7b6c1b4`](https://github.com/genesys/mollitia-prometheus/commit/7b6c1b40b5244e4479a300e3b5c15b4dd9751f0b)
+- Fix issue with sass-loader library [`d416877`](https://github.com/genesys/mollitia-prometheus/commit/d4168774bde01103d03f843154918f6f0eaae48b)
+
+## [0.0.5](https://github.com/genesys/mollitia-prometheus/compare/0.0.4...0.0.5) (2021-04-13)
 
 - add github pages documentation, add sonar scan [`62f51c7`](https://github.com/genesys/mollitia-prometheus/commit/62f51c701157c956b8b3f022f9f2e2d891ea949f)
+- Release mollitia-prometheus@0.0.5 [`9d20eb4`](https://github.com/genesys/mollitia-prometheus/commit/9d20eb4caeb492d08cb13278d1e189a85fa48d83)
 - Fix issue with methodName, renamed in funcName [`66b18d1`](https://github.com/genesys/mollitia-prometheus/commit/66b18d1de4edb497f022237238ac03bd2e4171d4)
 - remove sonar from ci [`57b8230`](https://github.com/genesys/mollitia-prometheus/commit/57b82307f0f0d40df2be3e9960fe502df6c0dba3)
 
