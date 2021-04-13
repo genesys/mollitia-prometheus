@@ -1,8 +1,13 @@
 # Changelog
 
-## [0.0.6](https://github.com/genesys/mollitia-prometheus/compare/0.0.5...0.0.6)
+## [0.0.7](https://github.com/genesys/mollitia-prometheus/compare/0.0.6...0.0.7)
+
+- Update package-lock.json [`4b6c4ad`](https://github.com/genesys/mollitia-prometheus/commit/4b6c4ad39b29e4b5eb23050a47a59679f90500fe)
+
+## [0.0.6](https://github.com/genesys/mollitia-prometheus/compare/0.0.5...0.0.6) (2021-04-13)
 
 - Update 3rd party libraries [`7b6c1b4`](https://github.com/genesys/mollitia-prometheus/commit/7b6c1b40b5244e4479a300e3b5c15b4dd9751f0b)
+- Release mollitia-prometheus@0.0.6 [`66fa215`](https://github.com/genesys/mollitia-prometheus/commit/66fa215d7ea9c9b7d70e06bf6cb53a2399dd43d5)
 - Fix issue with sass-loader library [`d416877`](https://github.com/genesys/mollitia-prometheus/commit/d4168774bde01103d03f843154918f6f0eaae48b)
 
 ## [0.0.5](https://github.com/genesys/mollitia-prometheus/compare/0.0.4...0.0.5) (2021-04-13)
