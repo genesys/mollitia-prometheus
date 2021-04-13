@@ -248,7 +248,7 @@ export class PrometheusAddon implements Mollitia.Addon {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       circuit.fn = (promise: any, funcName?: string): Mollitia.Circuit => {
         circuit.prometheus.funcName = funcName || promise.name;
-        return _fn(promise);
+        return _fn(promise, funcName);
       };
       circuits.push(circuit);
     }
