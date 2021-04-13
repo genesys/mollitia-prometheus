@@ -22,7 +22,7 @@ export interface PrometheusCircuitOptions {
   /**
    * If perMethod is set to true, set the function name, can be set with fn() function also.
    */
-  methodName?: string;
+  funcName?: string;
   /**
    * Adds labels to metrics.
    */

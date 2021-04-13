@@ -103,7 +103,7 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
     if (executor.constructor.name === Mollitia.Circuit.name) {
       metricName =
         (executor as Mollitia.Circuit).prometheus.perMethod ?
-        `${executor.prometheus.name}_${(executor as Mollitia.Circuit).prometheus.methodName}` :
+        `${executor.prometheus.name}_${(executor as Mollitia.Circuit).prometheus.funcName}` :
         executor.prometheus.name;
     } else {
       metricName = executor.prometheus.name;
