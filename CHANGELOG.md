@@ -1,8 +1,15 @@
 # Changelog
 
-## [0.0.4](https://github.com/genesys/mollitia-prometheus/compare/0.0.3...0.0.4)
+## [0.0.5](https://github.com/genesys/mollitia-prometheus/compare/0.0.4...0.0.5)
+
+- add github pages documentation, add sonar scan [`62f51c7`](https://github.com/genesys/mollitia-prometheus/commit/62f51c701157c956b8b3f022f9f2e2d891ea949f)
+- Fix issue with methodName, renamed in funcName [`66b18d1`](https://github.com/genesys/mollitia-prometheus/commit/66b18d1de4edb497f022237238ac03bd2e4171d4)
+- remove sonar from ci [`57b8230`](https://github.com/genesys/mollitia-prometheus/commit/57b82307f0f0d40df2be3e9960fe502df6c0dba3)
+
+## [0.0.4](https://github.com/genesys/mollitia-prometheus/compare/0.0.3...0.0.4) (2021-02-18)
 
 - make prometheus option optional [`47212fc`](https://github.com/genesys/mollitia-prometheus/commit/47212fc1d2e2474c62262f3ceabd335cb833a8a5)
+- Release mollitia-prometheus@0.0.4 [`81466c1`](https://github.com/genesys/mollitia-prometheus/commit/81466c17a5e224d0f8b128e307a0f90a7c1d2398)
 
 ## [0.0.3](https://github.com/genesys/mollitia-prometheus/compare/0.0.2...0.0.3) (2021-02-17)
 
