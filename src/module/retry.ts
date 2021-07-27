@@ -1,6 +1,6 @@
 import * as Mollitia from 'mollitia';
 import { PrometheusModuleOptions } from './index';
-import { commonMetrics, PrometheusCommonMetrics } from '../common';
+import { commonMetrics, getMetricName, PrometheusCommonMetrics } from '../common';
 import { PrometheusMetric } from '../metrics';
 import { PrometheusCounter } from '../metrics/counter';
 
@@ -54,19 +54,19 @@ export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleO
 
   // Handlers
   module.on('success-without-retry', (circuit: Mollitia.Circuit) => {
-    const metricName = circuit.prometheus.perMethod ? `${circuit.prometheus.name}_${circuit.prometheus.funcName}` : circuit.prometheus.name;
+    const metricName = getMetricName(circuit);
     success_without_retries.inc(1, metricName);
   });
   module.on('success-with-retry', (circuit: Mollitia.Circuit) => {
-    const metricName = circuit.prometheus.perMethod ? `${circuit.prometheus.name}_${circuit.prometheus.funcName}` : circuit.prometheus.name;
+    const metricName = getMetricName(circuit);
     success_with_retries.inc(1, metricName);
   });
   module.on('failure-without-retry', (circuit: Mollitia.Circuit) => {
-    const metricName = circuit.prometheus.perMethod ? `${circuit.prometheus.name}_${circuit.prometheus.funcName}` : circuit.prometheus.name;
+    const metricName = getMetricName(circuit);
     failures_without_retries.inc(1, metricName);
   });
   module.on('failure-with-retry', (circuit: Mollitia.Circuit) => {
-    const metricName = circuit.prometheus.perMethod ? `${circuit.prometheus.name}_${circuit.prometheus.funcName}` : circuit.prometheus.name;
+    const metricName = getMetricName(circuit);
     failures_with_retries.inc(1, metricName);
   });
 
