@@ -18,4 +18,4 @@ export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleO
   // TODO max_queued
   // TODO total_failures_max_queue_wait
   return metrics;
-}
+};

@@ -43,4 +43,4 @@ export interface PrometheusCircuitData extends PrometheusCircuitOptions {
 export const attachMetrics = (circuit: Mollitia.Circuit, options: Mollitia.CircuitOptions): PrometheusCircuitMetrics => {
   const metrics = commonMetrics(circuit, options);
   return metrics;
-}
+};

@@ -32,4 +32,4 @@ export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleO
     ...metrics,
     total_failures_timeout
   };
-}
+};

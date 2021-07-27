@@ -15,6 +15,7 @@ module.exports = {
   setupFilesAfterEnv: [
     "./test/_setup.ts"
   ],
+  forceExit: true,
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*.ts",

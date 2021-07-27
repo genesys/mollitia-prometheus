@@ -14,7 +14,7 @@
     "@nuxt/typescript-runtime": "2.1.0",
     "@nuxtjs/pwa": "3.3.5",
     "core-js": "3.10.1",
-    "mollitia": "0.0.4",
+    "mollitia": "0.0.6",
     "nuxt": "2.15.4"
   },
   "devDependencies": {

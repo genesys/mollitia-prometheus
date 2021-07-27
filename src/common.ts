@@ -5,7 +5,8 @@ import { PrometheusGauge } from './metrics/gauge';
 
 type durationType = {
   [key: string]: number;
-}
+};
+
 export interface PrometheusCommonMetrics {
   [key: string]: PrometheusMetric;
   /**
@@ -97,6 +98,7 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
     }
   );
 
+  // Handlers
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   executor.on('execute', (executor: Mollitia.Circuit|Mollitia.Module, promise: Promise<any>) => {
     let metricName = '';
@@ -143,4 +145,4 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
     duration_min,
     duration_count
   };
-}
+};

@@ -1,4 +1,4 @@
-import { PrometheusLabels, PrometheusMetric, PrometheusMetricLabelValues, PrometheusMetricType } from './index'
+import { PrometheusLabels, PrometheusMetric, PrometheusMetricLabelValues, PrometheusMetricType } from './index';
 
 interface PrometheusCounterOptions {
   description: string;
@@ -19,7 +19,7 @@ export class PrometheusCounter implements PrometheusMetric {
     this.type = PrometheusMetricType.COUNTER;
     this.labels = options?.labels || {};
     this.values = {};
-    if (options?.description) { this.description = options?.description }
+    if (options?.description) { this.description = options?.description; }
   }
   // Public Methods
   public inc (value = 1, circuitName: string): number {
