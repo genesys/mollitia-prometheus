@@ -5,7 +5,8 @@ import { PrometheusGauge } from './metrics/gauge';
 
 type durationType = {
   [key: string]: number;
-}
+};
+
 export interface PrometheusCommonMetrics {
   [key: string]: PrometheusMetric;
   /**
@@ -37,6 +38,15 @@ export interface PrometheusCommonMetrics {
    */
   duration_count: PrometheusGauge;
 }
+
+export const getMetricName = (executor: Mollitia.Circuit|Mollitia.Module) => {
+  if (executor.constructor.name === Mollitia.Circuit.name) {
+    const circuit = executor as Mollitia.Circuit;
+    return circuit.prometheus.perMethod ? `${circuit.prometheus.name}_${circuit.prometheus.funcName}` : executor.prometheus.name;
+  } else {
+    return executor.prometheus.name;
+  }
+};
 
 export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, options: Mollitia.CircuitOptions|Mollitia.ModuleOptions): PrometheusCommonMetrics => {
   let labels = options.prometheus?.labels;
@@ -97,17 +107,10 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
     }
   );
 
+  // Handlers
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   executor.on('execute', (executor: Mollitia.Circuit|Mollitia.Module, promise: Promise<any>) => {
-    let metricName = '';
-    if (executor.constructor.name === Mollitia.Circuit.name) {
-      metricName =
-        (executor as Mollitia.Circuit).prometheus.perMethod ?
-        `${executor.prometheus.name}_${(executor as Mollitia.Circuit).prometheus.funcName}` :
-        executor.prometheus.name;
-    } else {
-      metricName = executor.prometheus.name;
-    }
+    const metricName = getMetricName(executor);
     totalDuration[metricName] = totalDuration[metricName] || 0;
 
     const start = Date.now();
@@ -143,4 +146,4 @@ export const commonMetrics = (executor: Mollitia.Circuit|Mollitia.Module, option
     duration_min,
     duration_count
   };
-}
+};

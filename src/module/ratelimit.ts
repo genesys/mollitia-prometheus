@@ -16,4 +16,4 @@ export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleO
   const metrics = commonMetrics(module, options);
   // TODO total_failures_ratelimit
   return metrics;
-}
+};

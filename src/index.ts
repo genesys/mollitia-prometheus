@@ -199,7 +199,7 @@ export const scrap = (): string => {
         _metrics[metric] = {
           help: circuit.prometheus.metrics[metric].scrapHelp(),
           value: circuit.prometheus.metrics[metric].scrapValues()
-        }
+        };
       }
     }
   }
@@ -210,8 +210,8 @@ export const scrap = (): string => {
       } else {
         _metrics[metric] = {
           help: module.prometheus.metrics[metric].scrapHelp(),
-          value: module.prometheus.metrics[metric].scrapValues() 
-        }
+          value: module.prometheus.metrics[metric].scrapValues()
+        };
       }
     }
   }

@@ -17,4 +17,4 @@ export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleO
   // TODO total_cache_hit
   // TODO total_cache_hit_old
   return metrics;
-}
+};

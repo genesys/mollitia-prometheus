@@ -20,4 +20,4 @@ export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleO
   // TODO total_failures_open
   // TODO total_failures_slow
   return metrics;
-}
+};

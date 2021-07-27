@@ -15,4 +15,4 @@ export interface PrometheusFallbackData extends PrometheusModuleOptions {
 export const attachMetrics = (module: Mollitia.Module, options: Mollitia.ModuleOptions): PrometheusFallbackMetrics => {
   const metrics = commonMetrics(module, options);
   return metrics;
-}
+};

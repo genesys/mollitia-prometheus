@@ -1,4 +1,4 @@
-import { PrometheusLabels, PrometheusMetric, PrometheusMetricLabelValues, PrometheusMetricType } from './index'
+import { PrometheusLabels, PrometheusMetric, PrometheusMetricLabelValues, PrometheusMetricType } from './index';
 
 interface PrometheusGaugeOptions {
   description: string;
@@ -19,7 +19,7 @@ export class PrometheusGauge implements PrometheusMetric {
     this.type = PrometheusMetricType.GAUGE;
     this.labels = options?.labels || {};
     this.values = {};
-    if (options?.description) { this.description = options?.description }
+    if (options?.description) { this.description = options?.description; }
   }
   // Public Methods
   public inc (value = 1, circuitName: string): number {
