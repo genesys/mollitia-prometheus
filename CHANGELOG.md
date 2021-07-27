@@ -1,8 +1,13 @@
 # Changelog
 
-## [0.0.7](https://github.com/genesys/mollitia-prometheus/compare/0.0.6...0.0.7)
+## [0.0.8](https://github.com/genesys/mollitia-prometheus/compare/0.0.7...0.0.8)
+
+- new retry metrics, better eslint [`#2`](https://github.com/genesys/mollitia-prometheus/pull/2)
+
+## [0.0.7](https://github.com/genesys/mollitia-prometheus/compare/0.0.6...0.0.7) (2021-04-13)
 
 - Update package-lock.json [`4b6c4ad`](https://github.com/genesys/mollitia-prometheus/commit/4b6c4ad39b29e4b5eb23050a47a59679f90500fe)
+- Release mollitia-prometheus@0.0.7 [`41a46bd`](https://github.com/genesys/mollitia-prometheus/commit/41a46bdb95eb51f438f4b3eaf7d9c5575cd9d498)
 
 ## [0.0.6](https://github.com/genesys/mollitia-prometheus/compare/0.0.5...0.0.6) (2021-04-13)
 
