@@ -24,11 +24,9 @@ Then, add `Prometheus` options when creating circuits or modules:
 
 ``` javascript
 const myModule = new Mollitia.Timeout({
-  options: {
     prometheus: {
       name: 'my-module'
     }
-  }
 });
 const myCircuit = new Mollitia.Circuit({
   options: {
