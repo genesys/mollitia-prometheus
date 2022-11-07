@@ -24,11 +24,9 @@ Then, add `Prometheus` options when creating circuits or modules:
 
 ``` javascript
 const myModule = new Mollitia.Timeout({
-  options: {
     prometheus: {
       name: 'my-module'
     }
-  }
 });
 const myCircuit = new Mollitia.Circuit({
   options: {
@@ -41,6 +39,11 @@ const myCircuit = new Mollitia.Circuit({
     }
   }
 });
+
+// ...
+
+const myCircuitMetrics = myCircuit.prometheus.metrics; // Will return an object containing all metrics from this circuit
+const myCircuitScrap = myCircuit.prometheus.scrap(); // Will return the Prometheus scrap from this circuit
 ```
 
 Finally, you can get `Prometheus` metrics or scrap like this:
