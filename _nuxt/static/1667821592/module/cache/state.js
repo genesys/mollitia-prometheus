@@ -1,0 +1,1 @@
+window.__NUXT__=(function(a){return {staticAssetsBase:".\u002F_nuxt\u002Fstatic\u002F1667821592",layout:"default",error:a,serverRendered:true,routePath:"\u002Fmodule\u002Fcache",config:{_app:{basePath:"\u002Fmollitia-prometheus\u002F",assetsPath:".\u002F_nuxt\u002F",cdnURL:a},content:{dbHash:"01c6eb32"}}}}(null));
